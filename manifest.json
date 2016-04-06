@@ -1,0 +1,8 @@
+{
+  "name":"OwnYourData Vaccination Record",
+  "identifier":"eu.ownyourdata.vaccrec",
+  "type":"hosted",
+  "description":"Track vaccination records.",
+  "permissions":["eu.ownyourdata.vaccrec:read","eu.ownyourdata.vaccrec:write","eu.ownyourdata.vaccrec:update","eu.ownyourdata.vaccrec:delete"],
+  "requires": ["eu.ownyourdata.webhost"]
+}

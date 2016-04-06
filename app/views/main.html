@@ -1,0 +1,87 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">New Vaccination Record</h3>
+  </div>
+  <div class="panel-body">
+<form role="form">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="form-group">
+        <label for="patient">Patient:</label>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+        <input type="text" class="form-control" id="patient" ng-model="record.patient" required="true" placeholder="Name of patient">
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="form-group">
+        <label for="vaccination">Vaccination:</label>
+        <div id="vaccination">
+          <ui-select ng-model="record.vaccination"
+                     theme="bootstrap"
+                     ng-disabled="disabled"
+                     reset-search-input="false"
+                     style="width: 300px;">
+            <ui-select-match placeholder="Enter a vaccination...">{{$select.selected.abbreviation}} ({{$select.selected.name}})</ui-select-match>
+            <ui-select-choices repeat="vaccination in vaccinations | filter:{$:$select.search} track by $index">
+              <div ng-bind-html="vaccination.name | highlight: $vaccination.name"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <label for="date">Date:</label>
+      <p class="input-group" id="date">
+        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="record.date" is-open="popup.opened"
+               datepicker-options="dateOptions" ng-required="true"
+               show-button-bar="false"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open()"><i
+              class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+      </p>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <label for="doctor">Doctor:</label>
+        <input type="text" class="form-control" id="doctor" placeholder="Name of doctor" ng-model="record.doctor">
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-default" ng-click="submit()" ng-disabled="record.patient == undefined || record.vaccination == undefined || record.date == undefined">Submit</button>
+</form>
+</div>
+  </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Vaccination Records</h3>
+  </div>
+  <div class="panel-body">
+    <ui-select ng-model="display.name" theme="bootstrap">
+      <ui-select-match placeholder="Enter a patient">{{$select.selected}}</ui-select-match>
+      <ui-select-choices repeat="name in display.names | filter:{$:$select.search} track by $index">
+        <div ng-bind-html="name"></div>
+      </ui-select-choices>
+    </ui-select>
+    <p>
+    <ul class="list-group" ng-if="display.name">
+      <li class="list-group-item" ng-repeat="record in records | filter:{patient:display.name}">
+        <div class="row">
+          <div class="col-lg-2">{{record.vaccination.abbreviation}}</div>
+          <div class="col-lg-6">{{record.vaccination.name}}</div>
+          <div class="col-lg-4">{{record.date | date:format}}</div>
+        </div>
+      </li>
+    </ul>
+    </p>
+  </div>
+</div>
