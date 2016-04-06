@@ -41,6 +41,6 @@
     "test": "karma start test/karma.conf.js"
   },
   "dependencies": {
-    "simple-oauth2": "^0.5.1"
+    "simple-oauth2": "^0.6.0"
   }
 }
