@@ -5,6 +5,7 @@ before_install: npm install -g grunt-cli
 install:
   - npm install
   - bower install
+before_script: grunt build
 script: grunt test
 notifications:
   webhooks:
