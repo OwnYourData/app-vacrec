@@ -1,5 +1,6 @@
 # Vaccination Records
 [![Build Status](https://travis-ci.org/OwnYourData/app-vacrec.svg?branch=master)](https://travis-ci.org/OwnYourData/app-vacrec)
+[![Dependency Status](https://david-dm.org/OwnYourData/app-vacrec.svg)](https://david-dm.org/OwnYourData/app-vacrec) 
 
 ## Build & development
 
