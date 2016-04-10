@@ -4,7 +4,12 @@
 
 ## Build & development
 
-Run `grunt` for building.
+Run for building:
+```bash
+npm install
+bower install
+grunt build
+```
 
 ## Testing
 
