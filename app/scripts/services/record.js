@@ -9,7 +9,7 @@
  */
 angular.module('vaccRecApp')
   .factory('Record', function ($resource) {
-    return $resource('$pia/api/repos/eu.ownyourdata.vaccrec/items/:id', {}, {
+    return $resource('/api/repos/eu.ownyourdata.vaccrec/items/:id', {}, {
       'query': { method: 'GET', isArray: true},
       'get': {
         method: 'GET',

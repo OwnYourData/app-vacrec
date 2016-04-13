@@ -20,9 +20,6 @@ angular
     'ui.select',
     'ngToast'
   ])
-  .config(function ($httpProvider) {
-  $httpProvider.interceptors.push('piaAuthenticationInterceptor');
-  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

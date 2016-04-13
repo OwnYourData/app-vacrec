@@ -89,30 +89,32 @@ module.exports = function (grunt) {
                 '/app/styles',
                 connect.static('./app/styles')
               ),
-              connect().use('/token',function(req,res,next) {
+              connect().use('/api',function(req,res,next) {
+                var httpProxy = require('http-proxy');
+                var proxy = httpProxy.createProxyServer({});
+
                 var credentials = {
                   clientID: client,
                   clientSecret: secret,
                   site: 'http://localhost:8080'
                 };
 
-                console.log('using '+JSON.stringify(credentials));
+                  var oauth2 = require('simple-oauth2')(credentials);
+                  oauth2.client.getToken({},function(error,result){
+                    if(error) {
+                      console.log('Access Token Error', error.message);
+                      res.status(400).send('Bad Request');
+                      next();
+                    }
 
-                var oauth2 = require('simple-oauth2')(credentials);
-                oauth2.client.getToken({}, function(error,result){
-                  if (error) {
-                    console.log('Access Token Error', error.message);
-                    res.status(400).send('Bad Request');
-                    next();
-                  }
-                  else {
-                    console.log(result);
-                    var token = oauth2.accessToken.create(result);
-                    res.setHeader('Content-Type', 'application/json');
-                    res.end(JSON.stringify(result));
-                    next();
-                  }
-                });
+                    var token = oauth2.accessToken.create(result).token.access_token;
+
+                    proxy.on('proxyReq', function(proxyReq, req, res, options) {
+                      proxyReq.setHeader('Authorization', 'Bearer '+token);
+                    });
+
+                    proxy.web(req, res,{target: 'http://localhost:8080/api'});
+                  });
               }),
               connect.static(appConfig.app)
             ];
